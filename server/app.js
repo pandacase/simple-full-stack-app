@@ -14,27 +14,38 @@ app.use(express.urlencoded({ extended : false}));
 
 // create
 app.post('/insert', (request, response) => {
-    console.log("okay")
+    const { name } = request.body;
+    const db = dbService.getDbServiceInstance();
+    const result = db.insertNewName(name);
+    result
 });
 
-// read
+// get
 app.get('/getAll', (request, response) => {
     const db = dbService.getDbServiceInstance();
-    
     const result = db.getAllData();
     
     result
-    .then(data => response.json({data : data}))
-    .catch(err => console.log(err));
+    .then(data => response.json({data : data})) 
+    .catch(err => console.log(err)); // callback func: if response is rejected by client...
 });
 
 
 // update
+app.patch('/update', (request, response) => {
 
+})
 
 
 // delete
+app.delete('delete/:id', (request, response) => {
+    
+})
+
+
+// search
 
 
 
+// run the app
 app.listen(process.env.PORT, () => console.log('App is running'));
