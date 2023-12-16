@@ -5,6 +5,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const dbService = require('./dbService');
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended : false}));
@@ -18,6 +20,9 @@ app.post('/insert', (request, response) => {
 // read
 app.get('/getAll', (request, response) => {
     console.log('test');
+    response.json({
+        success: true
+    });
 });
 
 
