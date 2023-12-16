@@ -37,8 +37,28 @@ class dbService {
             });
             // console.log(response);
             return response;
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async insertNewName(name) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO names (name, data_added) value(?,?);";
+                connection.query(query, [name, dataAdded], (err, result) => {
+                    if (err)
+                        reject(new Error(err.message));
+                    resolve(result.insertId);
+                })
+            });
+            return {
+                id : insertId,
+                name : name,
+                dataAdded : dataAdded
+            };
+        } catch (err) {
+            console.log(err);
         }
     }
 }
