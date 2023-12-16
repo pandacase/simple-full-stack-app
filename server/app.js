@@ -17,7 +17,10 @@ app.post('/insert', (request, response) => {
     const { name } = request.body;
     const db = dbService.getDbServiceInstance();
     const result = db.insertNewName(name);
+    
     result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err)); // callback func: if response is rejected by client...
 });
 
 // get
@@ -27,7 +30,7 @@ app.get('/getAll', (request, response) => {
     
     result
     .then(data => response.json({data : data})) 
-    .catch(err => console.log(err)); // callback func: if response is rejected by client...
+    .catch(err => console.log(err));
 });
 
 
