@@ -31,7 +31,9 @@ function loadHTMLTable(data) {
     const table = document.querySelector('table tbody');
 
     if (data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
+        table.innerHTML = `<tr>
+                             <td class='no-data' colspan='5'>No Data</td>
+                           </tr>`;
     } else {
         table.innerHTML = "";
         data.forEach(row => {
@@ -52,4 +54,4 @@ function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
     return date.toLocaleDateString(undefined, options);
-  }
+}
