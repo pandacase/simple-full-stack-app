@@ -14,15 +14,18 @@ app.use(express.urlencoded({ extended : false}));
 
 // create
 app.post('/insert', (request, response) => {
-
+    console.log("okay")
 });
 
 // read
 app.get('/getAll', (request, response) => {
-    console.log('test');
-    response.json({
-        success: true
-    });
+    const db = dbService.getDbServiceInstance();
+    
+    const result = db.getAllData();
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
 });
 
 
@@ -34,4 +37,4 @@ app.get('/getAll', (request, response) => {
 
 
 
-app.listen(process.env.PORT, () => console.log('app is running'));
+app.listen(process.env.PORT, () => console.log('App is running'));
