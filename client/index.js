@@ -33,7 +33,23 @@ function loadHTMLTable(data) {
     if (data.length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
     } else {
-        table.innerHTML = "<tr><td class='no-data' colspan='5'>Something here</td></tr>";
+        table.innerHTML = "";
+        data.forEach(row => {
+            const rowData = `<tr>
+                              <td>${row.id}</td>
+                              <td>${row.name}</td>
+                              <td>${formatDate(row.data_added)}</td>
+                              <td><button class='delete-row-btn'>Delete</button></td>
+                              <td><button class='edit-row-btn'>Edit</button></td>
+                            </tr>`;
+            table.insertAdjacentHTML('beforeend', rowData);
+        });
     }
 }
 
+
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  }
