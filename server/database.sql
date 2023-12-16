@@ -15,3 +15,6 @@ create user admin1 identified by '1111';
 -- grant all to user
 grant select, insert, update, delete on simple_server.* to admin1;
 
+
+
+insert into names values(101, 'panda', '2023-12-16');
