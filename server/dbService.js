@@ -51,7 +51,7 @@ class dbService {
                     if (err)
                         reject(new Error(err.message));
                     resolve(result.insertId);
-                })
+                });
             });
             return {
                 id : insertId,
@@ -71,14 +71,13 @@ class dbService {
                     if (err)
                         reject(new Error(err.message));
                     resolve(result.affectedRows);
-                })
+                });
             });
             return response === 1 ? true : false;
         } catch (err) {
             console.log(err);
         }
     }
-
 
     async getByName(name) {
         try {
@@ -92,6 +91,23 @@ class dbService {
             });
             // console.log(response);
             return response;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async updateNameById(id, newName) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE names SET name = ? WHERE id = ?";
+                connection.query(query, [newName, id], (err, result) => {
+                    if (err)
+                        reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            // console.log(response);
+            return response === 1 ? true : false;
         } catch (err) {
             console.log(err);
         }
