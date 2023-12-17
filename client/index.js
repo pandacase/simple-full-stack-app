@@ -2,7 +2,9 @@
 ///////////////////////////
 ////// load the page //////
 ///////////////////////////
-document.addEventListener('DOMContentLoaded', getAll());
+document.addEventListener('DOMContentLoaded', function() {
+    getAll();
+});
 
 function getAll() {
     fetch('http://localhost:5000/getAll', {
@@ -44,8 +46,7 @@ function formatDate(dateString) {
 ///////////////////////////
 ///// Add-name botton /////
 ///////////////////////////
-const addBtn = document.querySelector('#add-name-btn');
-addBtn.onclick = function() {
+document.querySelector('#add-name-btn').addEventListener('click', function(event) {
     const nameInput = document.querySelector('#name-input');
     const name = nameInput.value;
     nameInput.value = "";
@@ -67,7 +68,7 @@ addBtn.onclick = function() {
             getAll();
         }
     })
-}
+})
 
 
 ///////////////////////////
@@ -117,6 +118,48 @@ function deleteRowById(id) {
 }
 
 function handleEditId(id) {
+    const wholeModal =  document.querySelector('#editModalBackground');
+    wholeModal.style.display = 'block';
+    const editInput = document.querySelector('#editInput');
+    editInput.placeholder = 'Editing: id #' + id;
 
+    document.querySelector('#editConfirmBtn').addEventListener('click', function() {
+        editRowById(id);
+    });
 }
 
+function editRowById(id) {
+    const nameInput = document.querySelector('#editInput');
+    const name = nameInput.value;
+    nameInput.value = "";
+    if (name.length === 0) {
+        return;
+    }
+
+    fetch('http://localhost:5000/update/', {
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'PATCH',
+        body: JSON.stringify({
+            id: id,
+            name: name
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            closeModal();
+            location.reload();
+        }
+    })
+}
+
+document.querySelector('#editCloseBtn').addEventListener('click', function() {
+    closeModal();
+});
+
+function closeModal() {
+    const wholeModal = document.querySelector('#editModalBackground');
+    wholeModal.style.display = 'none';
+}
