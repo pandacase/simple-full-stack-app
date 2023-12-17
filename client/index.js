@@ -5,7 +5,9 @@
 document.addEventListener('DOMContentLoaded', getAll());
 
 function getAll() {
-    fetch('http://localhost:5000/getAll')
+    fetch('http://localhost:5000/getAll', {
+        method: 'GET'
+    })
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 }
@@ -46,10 +48,10 @@ const addBtn = document.querySelector('#add-name-btn');
 addBtn.onclick = function() {
     const nameInput = document.querySelector('#name-input');
     const name = nameInput.value;
+    nameInput.value = "";
     if (name.length === 0) {
         return;
     }
-    nameInput.value = "";
 
     fetch('http://localhost:5000/insert', {
         headers: {
@@ -69,6 +71,28 @@ addBtn.onclick = function() {
 
 
 ///////////////////////////
+///// Search by name //////
+///////////////////////////
+
+const searchBtn = document.querySelector('#search-btn');
+searchBtn.onclick = function() {
+    const nameInput = document.querySelector('#search-input');
+    const name = nameInput.value;
+    nameInput.value = "";
+    if (name.length === 0) {
+        getAll();
+        return;
+    }
+
+    fetch('http://localhost:5000/search/' + name, {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+}
+
+
+///////////////////////////
 ///// Row edit/delete /////
 ///////////////////////////
 
@@ -76,7 +100,7 @@ document.querySelector('table tbody').addEventListener('click', function(event) 
     if (event.target.className === 'delete-row-btn') {
         deleteRowById(event.target.dataset.id);
     } else if (event.target.className === 'edit-row-btn') {
-
+        handleEditId(event.target.dataset.id);
     }
 });
 
@@ -92,9 +116,7 @@ function deleteRowById(id) {
     });
 }
 
+function handleEditId(id) {
 
-
-
-
-
+}
 
