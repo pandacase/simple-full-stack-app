@@ -29,7 +29,7 @@ app.get('/getAll', (request, response) => {
     const result = db.getAllData();
     
     result
-    .then(data => response.json({data : data})) 
+    .then(data => response.json({data : data}))
     .catch(err => console.log(err));
 });
 
@@ -42,12 +42,22 @@ app.patch('/update', (request, response) => {
 
 // delete
 app.delete('delete/:id', (request, response) => {
-    
+    const { id } = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.deleteRowById(id);
+
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
 })
 
 
 // search
-
+app.get('/search/:name', (request, response) => {
+    const { name } = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.getByname(name);
+})
 
 
 // run the app
