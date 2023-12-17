@@ -30,11 +30,14 @@
             <tbody></tbody>
         </table>
 
-        <section hidden id="update-row">
-            <label>Name:</label>
-            <input type="text" id="update-name-input">
-            <button id="update-row-btn">Update</button>
-        </section>
+        <div id="editModalBackground">
+            <div id="editModal">
+                <input placeholder="" type="text" id="editInput">
+                <br>
+                <button id="editConfirmBtn">Confirm</button>
+                <button id="editCloseBtn">Cancel</button>
+            </div>
+        </div>
         <script src="./index.js"></script>
     </main>
 </body>
