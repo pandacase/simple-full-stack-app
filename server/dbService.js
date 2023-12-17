@@ -63,9 +63,17 @@ class dbService {
         }
     }
 
-    async deleteRowById(name) {
+    async deleteRowById(id) {
         try {
-            
+            const response = await new Promise((resolve, reject) => {
+                const query = "DELETE FROM names WHERE id = ?";
+                connection.query(query, [id], (err, result) => {
+                    if (err)
+                        reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+            return response === 1 ? true : false;
         } catch (err) {
             console.log(err);
         }
@@ -74,7 +82,16 @@ class dbService {
 
     async getByName(name) {
         try {
-
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM names WHERE name = ?;";
+                connection.query(query, [name], (err, result) => {
+                    if (err) 
+                        reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            // console.log(response);
+            return response;
         } catch (err) {
             console.log(err);
         }
