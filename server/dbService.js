@@ -29,10 +29,10 @@ class dbService {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM names";
-                connection.query(query, (err, results) => {
+                connection.query(query, (err, result) => {
                     if (err) 
                         reject(new Error(err.message));
-                    resolve(results);
+                    resolve(result);
                 });
             });
             // console.log(response);
@@ -44,9 +44,10 @@ class dbService {
 
     async insertNewName(name) {
         try {
-            const response = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO names (name, data_added) value(?,?);";
-                connection.query(query, [name, dataAdded], (err, result) => {
+            const dateAdded = new Date();
+            const insertId = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO names (name, date_added) VALUES (?,?);";
+                connection.query(query, [name, dateAdded], (err, result) => {
                     if (err)
                         reject(new Error(err.message));
                     resolve(result.insertId);
@@ -55,8 +56,25 @@ class dbService {
             return {
                 id : insertId,
                 name : name,
-                dataAdded : dataAdded
+                dataAdded : dateAdded
             };
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async deleteRowById(name) {
+        try {
+            
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+    async getByName(name) {
+        try {
+
         } catch (err) {
             console.log(err);
         }
