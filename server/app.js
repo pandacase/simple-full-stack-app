@@ -41,7 +41,7 @@ app.patch('/update', (request, response) => {
 
 
 // delete
-app.delete('delete/:id', (request, response) => {
+app.delete('/delete/:id', (request, response) => {
     const { id } = request.params;
     const db = dbService.getDbServiceInstance();
     const result = db.deleteRowById(id);
@@ -56,7 +56,11 @@ app.delete('delete/:id', (request, response) => {
 app.get('/search/:name', (request, response) => {
     const { name } = request.params;
     const db = dbService.getDbServiceInstance();
-    const result = db.getByname(name);
+    const result = db.getByName(name);
+
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
 })
 
 
