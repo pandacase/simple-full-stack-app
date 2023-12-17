@@ -10,7 +10,7 @@ main {
 }
 
 table {
-    margin: 50px 0;
+    margin: 50px auto;
 }
 
 table, th, td {
